@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UrlShortenerController {
 	final static Logger logger = Logger.getLogger(UrlShortenerController.class);
-	private String basePath="http://localhost:8080/urlEnlarger?key=";
+	private String basePath="http://oso.co/e?k=";
     private static UrlShortener urlShortener=new UrlShortener();
     
-    @RequestMapping("/urlShortener")
-    public String urlShortener(@RequestParam(value="url") String url) {
+    @RequestMapping(value={"/urlShortener", "s"})
+    public String urlShortener(@RequestParam(value="u") String url) {
     	logger.info("UrlShortenerController.urlShortener<--"+url);
     	String ret=basePath+urlShortener.shorten(url);
     	logger.info("UrlShortenerController.urlShortener-->"+ret);
@@ -26,8 +26,8 @@ public class UrlShortenerController {
     	return ret;
     }
     
-    @RequestMapping("/urlEnlarger")
-    public void urlEnlarger(HttpServletResponse response,@RequestParam(value="key") String key) throws IOException {
+    @RequestMapping(value={"/urlEnlarger","/e"})
+    public void urlEnlarger(HttpServletResponse response,@RequestParam(value="k") String key) throws IOException {
     	logger.info("UrlShortenerController.urlEnlarger<--"+key);
     	String url =urlShortener.enlarge(key);
     	logger.info("UrlShortenerController.urlEnlarger--> "+url);
